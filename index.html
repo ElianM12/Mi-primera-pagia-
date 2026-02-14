@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Esta es mi primera web</title>
+<title>Mi web PRO MAX</title>
 
 <style>
 body{
@@ -20,158 +20,190 @@ body{
     animation: fondo 12s ease infinite;
 }
 
-@keyframes fondo {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+@keyframes fondo{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 .mensaje{
     text-align:center;
     color:white;
-    font-size:32px;
+    font-size:30px;
     font-weight:bold;
-    padding:30px;
+    padding:25px;
     border-radius:20px;
     background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px);
     animation: flotar 3s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(255,255,255,0.5);
-    margin-bottom:20px;
 }
 
 @keyframes flotar{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-15px);}
-    100%{transform:translateY(0);}
+0%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0);}
 }
 
 .corazon{
     position:absolute;
     color:#001eff;
-    font-size:20px;
-    animation: subir 6s linear infinite;
+    animation: subir linear infinite;
 }
 
 @keyframes subir{
-    0%{transform:translateY(100vh) scale(1); opacity:1;}
-    100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
+0%{transform:translateY(100vh) scale(1) rotate(0);opacity:1;}
+100%{transform:translateY(-10vh) scale(1.6) rotate(360deg);opacity:0;}
 }
 
-.buscador{
-    text-align:center;
+.animar{ animation: aparecer 0.6s ease; }
+
+@keyframes aparecer{
+0%{opacity:0;transform:scale(.7) translateY(20px);filter:blur(4px);}
+60%{transform:scale(1.1);}
+100%{opacity:1;transform:scale(1) translateY(0);filter:blur(0);}
 }
 
-input{
-    padding:10px;
-    border-radius:10px;
-    border:none;
-    font-size:16px;
-    outline:none;
-}
-
-button{
-    padding:10px 15px;
-    border:none;
-    border-radius:10px;
-    background:#ff4da6;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    margin-left:5px;
-}
-
-.resultado{
-    margin-top:15px;
-    font-size:20px;
-    color:white;
-    font-weight:bold;
-}
-
-.compartir{
-    margin-top:20px;
-}
+.buscador{text-align:center;margin-top:10px;}
+input{padding:10px;border-radius:10px;border:none;font-size:16px;}
+button{padding:10px 15px;border:none;border-radius:10px;background:#ff4da6;color:white;font-weight:bold;cursor:pointer;margin-left:5px;}
+.resultado{margin-top:15px;font-size:20px;color:white;font-weight:bold;min-height:24px;}
 </style>
 </head>
 
 <body>
 
+<audio id="sonido" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
 <div class="mensaje">
-💖 Introduce tu nombre en la barra de búsqueda 💖<br><br>
-De parte de tu amigo y vecino<br>
-🕷️ El Hombre Araña 🕷️<br>
-Alias Elian
+💖 Escribe tu nombre 💖<br>
+🕷️ El Hombre Araña — Elian
 </div>
 
 <div class="buscador">
-<input type="text" id="busqueda" placeholder="Escribe tu nombre...">
+<input type="text" id="busqueda" placeholder="Tu nombre...">
 <button onclick="buscar()">Buscar</button>
 <div class="resultado" id="resultado"></div>
 </div>
 
-<div class="compartir">
-<button onclick="compartir()">Compartir por link</button>
-<button onclick="copiarLink()">Copiar link</button>
+<!-- 🔗 BOTONES COMPARTIR -->
+<div style="margin-top:15px;">
+<button onclick="compartir()">📤 Compartir</button>
+<button onclick="whatsapp()">🟢 WhatsApp</button>
+<button onclick="copiar()">📋 Copiar link</button>
 </div>
 
 <script>
+// 💖 corazones
 function crearCorazon(){
-    const corazon = document.createElement("div");
-    corazon.classList.add("corazon");
-    corazon.innerHTML = "❤";
-    corazon.style.left = Math.random()*100 + "vw";
-    corazon.style.fontSize = (Math.random()*20 + 15) + "px";
-    document.body.appendChild(corazon);
-    setTimeout(()=>{ corazon.remove(); }, 6000);
+const c=document.createElement("div");
+c.className="corazon";
+c.innerHTML="❤";
+c.style.left=Math.random()*100+"vw";
+c.style.fontSize=(Math.random()*25+15)+"px";
+c.style.animationDuration=(Math.random()*3+4)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),7000);
 }
-setInterval(crearCorazon, 300);
+setInterval(crearCorazon,250);
 
+// ⌨️ escribir animado
+function escribir(texto, elemento){
+elemento.innerHTML="";
+let i=0;
+function escribirLetra(){
+if(i<texto.length){
+elemento.innerHTML+=texto.charAt(i);
+i++;
+setTimeout(escribirLetra,25);
+}}
+escribirLetra();
+}
+
+// 🔍 buscar
 function buscar(){
-    const texto = document.getElementById("busqueda").value.toLowerCase().trim();
-    const resultado = document.getElementById("resultado");
+const texto=document.getElementById("busqueda").value.toLowerCase().trim();
+const r=document.getElementById("resultado");
+const sonido=document.getElementById("sonido");
+const musica=document.getElementById("musica");
 
-    if(texto === "elian"){
-        resultado.innerHTML = "😎 klk elian mi creador";
-    }else if(texto === "brandy"){
-        resultado.innerHTML = "💖 Brandy gracias por ser mi amiga no te soporto dita loca  💖";
-    }else if (texto === "abel"){
-        resultado.innerHTML = "Klk sin b da la luz 😅";
-    }else{
-        resultado.innerHTML = "No encontré eso quien diablo es omg😅";
-    }else if (tesxto === "flor"){
-    resultado.innerhtml = "Hola quise hacerlo de esta manera ya que good hihih feliz dia del amor y la amistada ❤️❤️ un abrazote , espero que la pases bn , no soy muchas palabra pero tu sabes klk con klk ";
-   
+if(texto===""){
+escribir("Escribe algo 😅",r);
+}else if(texto==="elian"){
+escribir("😎 klk elian mi creador",r);
+}else if(texto==="brandy"){
+escribir("💖 Brandy gracias por ser mi amiga loca favorita cuero loca ,etpd💖",r);
+}else if(texto==="abel"){
+escribir("Klk sin b da la luz 😅",r);
+}else if(texto==="flor"){
+escribir("🌸 Feliz día del amor y la amistad te quiero , espero que estes bn y la pases bn un abrazote ,. sabes que no soy de muchas palabras ❤️",r);
+}else if(texto==="amor"){
+escribir("🔐 Mensaje secreto: eres especial 💖",r);
+}else{
+escribir("No encontré ese nombre 😅",r);
 }
 
+// sonido
+sonido.currentTime=0;
+sonido.play();
+
+// música
+musica.volume=0.2;
+musica.play();
+
+// animación
+r.classList.remove("animar");
+void r.offsetWidth;
+r.classList.add("animar");
+
+// guardar nombre en link
+history.replaceState(null,null,"?nombre="+encodeURIComponent(texto));
+}
+
+// ENTER
+document.getElementById("busqueda").addEventListener("keypress",e=>{
+if(e.key==="Enter")buscar();
+});
+
+// leer nombre del link
+const params=new URLSearchParams(window.location.search);
+const nombre=params.get("nombre");
+if(nombre){
+document.getElementById("busqueda").value=nombre;
+setTimeout(buscar,300);
+}
+
+// 🔗 obtener link
+function obtenerLink(){
+const texto=document.getElementById("busqueda").value.toLowerCase().trim();
+return window.location.origin + window.location.pathname + "?nombre=" + encodeURIComponent(texto);
+}
+
+// 📤 compartir
 function compartir(){
-    const link = window.location.href;
-    const mensaje = "Mira esta página que hice 😎👉 " + link;
-
-    if(navigator.share){
-        navigator.share({
-            title: "Mi primera web",
-            text: mensaje,
-            url: link
-        });
-    }else{
-        alert("Tu navegador no permite compartir directo. Copia el link manualmente.");
-    }
+const link=obtenerLink();
+const mensaje="Mira esta página 😎👉 "+link;
+if(navigator.share){
+navigator.share({title:"Mi web PRO MAX",text:mensaje,url:link});
+}else{ alert("Tu navegador no permite compartir directo"); }
 }
 
-function copiarLink(){
-    const link = window.location.href;
-    navigator.clipboard.writeText(link);
-    alert("Link copiado 😎");
+// 🟢 WhatsApp
+function whatsapp(){
+const link=obtenerLink();
+window.open("https://wa.me/?text="+encodeURIComponent("Mira esta página 😎👉 "+link),"_blank");
+}
+
+// 📋 copiar
+function copiar(){
+const link=obtenerLink();
+navigator.clipboard.writeText(link);
+alert("Link copiado 😎");
 }
 </script>
 
 </body>
-
 </html>
-
-
-
-
 
 
 
