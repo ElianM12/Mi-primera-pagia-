@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esta es mi primera web</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow:hidden;
+    background: linear-gradient(270deg, #920e50, #ffc0cb, #0138ff, #ff9ecf);
+    background-size: 800% 800%;
+    animation: fondo 12s ease infinite;
+}
+
+@keyframes fondo {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.mensaje{
+    text-align:center;
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+    padding:30px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(6px);
+    animation: flotar 3s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    margin-bottom:20px;
+}
+
+@keyframes flotar{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+    100%{transform:translateY(0);}
+}
+
+.corazon{
+    position:absolute;
+    color:#001eff;
+    font-size:20px;
+    animation: subir 6s linear infinite;
+}
+
+@keyframes subir{
+    0%{transform:translateY(100vh) scale(1); opacity:1;}
+    100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
+}
+
+.buscador{
+    text-align:center;
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+    outline:none;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    background:#ff4da6;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-left:5px;
+}
+
+.resultado{
+    margin-top:15px;
+    font-size:20px;
+    color:white;
+    font-weight:bold;
+}
+
+.compartir{
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="mensaje">
+💖 Introduce tu nombre en la barra de búsqueda 💖<br><br>
+De parte de tu amigo y vecino<br>
+🕷️ El Hombre Araña 🕷️<br>
+Alias Elian
+</div>
+
+<div class="buscador">
+<input type="text" id="busqueda" placeholder="Escribe tu nombre...">
+<button onclick="buscar()">Buscar</button>
+<div class="resultado" id="resultado"></div>
+</div>
+
+<div class="compartir">
+<button onclick="compartir()">Compartir por link</button>
+<button onclick="copiarLink()">Copiar link</button>
+</div>
+
+<script>
+function crearCorazon(){
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "❤";
+    corazon.style.left = Math.random()*100 + "vw";
+    corazon.style.fontSize = (Math.random()*20 + 15) + "px";
+    document.body.appendChild(corazon);
+    setTimeout(()=>{ corazon.remove(); }, 6000);
+}
+setInterval(crearCorazon, 300);
+
+function buscar(){
+    const texto = document.getElementById("busqueda").value.toLowerCase().trim();
+    const resultado = document.getElementById("resultado");
+
+    if(texto === "elian"){
+        resultado.innerHTML = "😎 klk elian mi creador";
+    }else if(texto === "brandy"){
+        resultado.innerHTML = "💖 Brandy gracias por ser mi amiga 💖";
+    }else if(texto === ""){
+        resultado.innerHTML = "Escribe algo primero 😅";
+    }else{
+        resultado.innerHTML = "No encontré eso 😅";
+    }
+}
+
+function compartir(){
+    const link = window.location.href;
+    const mensaje = "Mira esta página que hice 😎👉 " + link;
+
+    if(navigator.share){
+        navigator.share({
+            title: "Mi primera web",
+            text: mensaje,
+            url: link
+        });
+    }else{
+        alert("Tu navegador no permite compartir directo. Copia el link manualmente.");
+    }
+}
+
+function copiarLink(){
+    const link = window.location.href;
+    navigator.clipboard.writeText(link);
+    alert("Link copiado 😎");
+}
+</script>
+
+</body>
+</html>
